@@ -1,6 +1,7 @@
 export default {
-	async fetch(request: Request): Promise<Response> {
-		const apiKey = 'n5aNKscfqByA6WE9xLGz7zBf7VzRuDQI';
+	async fetch(request: Request, env: { API_KEY: string }): Promise<Response> {
+		const apiKey = env.API_KEY;
+		console.log(`received API Key: ${apiKey}`);
 
 		const url = new URL(request.url);
 		if (url.hostname.startsWith("analyst")) {
