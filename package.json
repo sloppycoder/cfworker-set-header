@@ -1,5 +1,5 @@
 {
-	"name": "cf-set-header-worker",
+	"name": "cfworker-header-for-cloudrun",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {

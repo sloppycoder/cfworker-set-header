@@ -1,12 +1,20 @@
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const allApiKeys = JSON.parse(env.ALL_API_KEYS);
-		const api_key = allApiKeys["fund_analyst"];
-		
-		console.log('API Key:', api_key);
+	async fetch(request: Request): Promise<Response> {
+		const cloudRunHostname = 'whoami-1049830028293.us-central1.run.app';
 
-		const requestWithApiKey = new Request(request);
-		requestWithApiKey.headers.set('X-API-KEY', api_key);
-		return fetch(requestWithApiKey);
+		const url = new URL(request.url);
+		url.hostname = cloudRunHostname;
+
+		const newHeaders = new Headers(request.headers);
+		newHeaders.set('X-API-KEY', 'n5aNKscfqByA6WE9xLGz7zBf7VzRuDQI');
+
+		const modifiedRequest = new Request(url.toString(), {
+			method: request.method,
+			headers: newHeaders,
+			body: ['GET', 'HEAD'].includes(request.method) ? null : request.body,
+			redirect: 'follow',
+		});
+
+		return fetch(modifiedRequest);
 	},
-} satisfies ExportedHandler<Env>;
+};
