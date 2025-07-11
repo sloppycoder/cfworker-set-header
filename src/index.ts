@@ -1,14 +1,22 @@
+const HOSTMAP: Map<string, string> = new Map([
+	['analyst.run.vino9.net', 'fund-analyst-1049830028293.us-central1.run.app'],
+	['whoami.run.vino9.net', 'whoami-1049830028293.us-central1.run.app'],
+]);
+
 export default {
 	async fetch(request: Request, env: { API_KEY: string }): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (!HOSTMAP.has(url.hostname)) {
+			console.log(`no matching entry for ${url.hostname}`);
+			return fetch(request);
+		}
+
+		url.hostname = HOSTMAP.get(url.hostname) ?? url.hostname;
+		console.log(`mapped hostname: ${url.hostname}`);
+
 		const apiKey = env.API_KEY;
 		console.log(`received API Key: ${apiKey}`);
-
-		const url = new URL(request.url);
-		if (url.hostname.startsWith("analyst")) {
-			url.hostname = 'fund-analyst-1049830028293.us-central1.run.app';
-		} else {
-			url.hostname = 'whoami-1049830028293.us-central1.run.app'
-		}
 
 		const newHeaders = new Headers(request.headers);
 		newHeaders.set('X-API-KEY', apiKey);
