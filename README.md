@@ -8,17 +8,18 @@ However, sometimes the protected application relies on certain HTTP header to fu
 ## Solution
 This worker allows modification to any header so that situations like Cloud Run can be fronted by Cloudflare Zero Trust.
 
-+--------+         +--------------------+                      +------------+
-|        |         |        +--------+  |  Host:<gcp url>      |            |
-| Client | ------> |        | this   |  | -------------------->|  Cloud Run |
-|        |         |        | worker |  |  X-API-KEY: secret   |            |
-+--------+         |        +--------+  |                      +------------+
-                   |                    |
-                   |                    |
-                   |    Cloudflare      |
-                   |                    |
-                   +--------------------+
-
+```text
+    +--------+                     +----------------------+                      +------------+
+    |        |   Host:<cf host>    | +-----+  +--------+  |  Host:<gcp host>     |            |
+    | Client | ------------------> | |     |  | this   |  | -------------------->|  Cloud Run |
+    |        |                     | |proxy|  | worker |  |  X-API-KEY: secret   |            |
+    +--------+                     | |     |  +--------+  |                      +------------+
+                                   | +-----+              |
+                                   |                      |
+                                   |      Cloudflare      |
+                                   |                      |
+                                   +----------------------+
+```
 
 ## How to use it
 1. Deploy app in Cloud Run with ```allow-unauthenticated```. It is probably desirable to modify it to check for certain cloudflare header or custom header like X-API-KEY for some basic protection. This is not strictly neccessary but without any protect using Cloudflare Zero Trust seems pointless.
@@ -27,7 +28,7 @@ This worker allows modification to any header so that situations like Cloud Run 
 
 3. Create DNS record for ```app.example.com``` of type ```CNAME``` pointing to URL of the cloud run app, e.g. ```https://whoami-10498300.us-east1.run.app```
 
-4. Update ```src/index.ts```, update the hostname accordingly, then deploy the worker by running ```npm run deploy```
+4. Update ```src/main.py```, update the hostname accordingly, then deploy the worker by running ```npx wranger deploy```
 
 5. Go to the working settings, under ```Domains & Routes```, add a new route that points to ```app.example.com/*```
 
