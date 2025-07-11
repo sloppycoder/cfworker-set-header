@@ -1,0 +1,9 @@
+name = "header-for-cloudrun"
+main = "src/main.py"
+compatibility_date = "2025-07-10"
+
+[observability]
+enabled = true
+
+[placement]
+mode = "smart"
