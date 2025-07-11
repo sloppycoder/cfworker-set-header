@@ -1,11 +1,8 @@
 name = "header-for-cloudrun"
 main = "src/index.ts"
 compatibility_date = "2025-07-10"
+route = "*-run.vino9.net"
 
 [observability]
 enabled = true
-
-routes = [
-    "*-run.vino9.net"
-]
 
