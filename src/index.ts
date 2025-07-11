@@ -6,18 +6,17 @@ const HOSTMAP: Map<string, string> = new Map([
 export default {
 	async fetch(request: Request, env: { API_KEY: string }): Promise<Response> {
 		const url = new URL(request.url);
+		const oldHost = url.hostname;
 
-		if (!HOSTMAP.has(url.hostname)) {
-			console.log(`no matching entry for ${url.hostname}`);
+		if (!HOSTMAP.has(oldHost)) {
+			console.log(`no matching entry for ${oldHost}`);
 			return fetch(request);
 		}
 
 		url.hostname = HOSTMAP.get(url.hostname) ?? url.hostname;
-		console.log(`mapped hostname: ${url.hostname}`);
+		console.log(`mapped ${oldHost} to ${url.hostname}`);
 
 		const apiKey = env.API_KEY;
-		console.log(`received API Key: ${apiKey}`);
-
 		const newHeaders = new Headers(request.headers);
 		newHeaders.set('X-API-KEY', apiKey);
 
