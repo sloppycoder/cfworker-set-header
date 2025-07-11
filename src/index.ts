@@ -17,13 +17,9 @@ export default {
 		url.hostname = HOSTMAP.get(url.hostname) ?? url.hostname;
 		console.log(`mapped ${oldHost} to ${url.hostname}`);
 
-		const apiKey = env.API_KEY;
-		const newHeaders = new Headers(request.headers);
-		newHeaders.set('X-API-KEY', apiKey);
-
 		const modifiedRequest = new Request(url.toString(), {
 			method: request.method,
-			headers: newHeaders,
+			headers: request.headers,
 			body: ['GET', 'HEAD'].includes(request.method) ? null : request.body,
 			redirect: 'follow',
 		});
