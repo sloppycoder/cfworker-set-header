@@ -1,4 +1,3 @@
-from js import Headers
 from workers import fetch
 from urllib.parse import urlparse
 
@@ -21,13 +20,9 @@ async def on_fetch(request, env):
     new_url = url._replace(netloc=new_host).geturl()
     print(f"mapping {orig_host} to {new_host}, new_url={new_url}")
 
-
-    new_headers = Headers.new(request.headers)
-    new_headers.set("X-API-KEY", env.API_KEY)
-
     return await fetch(new_url,
         method=request.method,
-        headers=new_headers.to_py(),
+        headers=request.headers.to_py(),
         body=request.body if request.method not in ["GET", "HEAD"] else None,
         redirect="follow"
     )
