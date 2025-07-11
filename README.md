@@ -28,7 +28,7 @@ This worker allows modification to any header so that situations like Cloud Run 
 
 3. Create DNS record for ```app.example.com``` of type ```CNAME``` pointing to URL of the cloud run app, e.g. ```https://whoami-10498300.us-east1.run.app```
 
-4. Update ```src/main.py```, update the hostname accordingly, then deploy the worker by running ```npx wranger deploy```
+4. Update ```src/main.py``` or ```src/index.ts```, update the hostname accordingly, then deploy the worker by running ```npx wranger deploy```
 
 5. Go to the working settings, under ```Domains & Routes```, add a new route that points to ```app.example.com/*```
 
