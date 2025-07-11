@@ -14,7 +14,7 @@ async def on_fetch(request, env):
     orig_host = url.hostname
 
     if orig_host not in HOSTMAP:
-        print(f"skipping host {url.hostname}")
+        print(f"skipping host {orig_host}")
         return await fetch(request)
 
     new_host = HOSTMAP[orig_host]
