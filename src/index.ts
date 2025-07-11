@@ -1,6 +1,6 @@
 const HOSTMAP: Map<string, string> = new Map([
-	['analyst.run.vino9.net', 'fund-analyst-1049830028293.us-central1.run.app'],
-	['whoami.run.vino9.net', 'whoami-1049830028293.us-central1.run.app'],
+	['analyst-run.vino9.net', 'fund-analyst-1049830028293.us-central1.run.app'],
+	['whoami-run.vino9.net', 'whoami-1049830028293.us-central1.run.app'],
 ]);
 
 export default {

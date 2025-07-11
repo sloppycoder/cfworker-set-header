@@ -6,6 +6,6 @@ compatibility_date = "2025-07-10"
 enabled = true
 
 routes = [
-    "*.run.vino9.net"
+    "*-run.vino9.net"
 ]
 
